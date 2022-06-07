@@ -1,8 +1,6 @@
 import chalk from "chalk";
 import { getUserById, newUser } from "../repositories/userRepository.js";
 import { getUrlByUserId } from "../repositories/urlsRepository.js";
-import joi from "joi";
-
 
 export async function getUserId(req, res) {   
     try{
@@ -19,15 +17,17 @@ export async function getUserId(req, res) {
     }
 }
 
-export async function createUser(req, res) {
-    let { name, email, password } = req.body;
+export async function createUser(_req, res) {
+    const { name, email, password} = res.locals;
     try{
-        const result = await newUser(name, email, password);
-        if(result.rowCount === 0) return res.status(409).send({ message: "User already exists" });
-
+       await newUser(name, email, password);
         res.status(201).send({message: "User created successfully"});
     } catch(err){
         console.log(chalk.red(`ERROR CREATING USER: ${err}`));
+
+        if(err.message.includes("duplicate key value violates unique constraint"))
+            return res.status(409).send({error: "User already exists"});
+
         res.status(500).send({error: err.message});
     }
 }

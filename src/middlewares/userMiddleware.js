@@ -19,10 +19,10 @@ export function validateData(req, res, next) {
 export async function sanitizeData(req, res, next) {
     let { name, email, password } = req.body;
     try{
-        name = stripHtml(name).result.trim();
-        email = stripHtml(email).result.trim();
+        res.locals.name = stripHtml(name).result.trim();
+        res.locals.email = stripHtml(email).result.trim();
         password = stripHtml(password).result.trim();
-        password = await bcrypt.hash(password, 10);
+        res.locals.password = await bcrypt.hash(password, 10);
         next();
     } catch(err){
         console.log(chalk.red(`ERROR SANITIZING DATA: ${err}`));
