@@ -1,6 +1,8 @@
 import chalk from "chalk";
-import { getUserById } from "../repositories/userRepository.js";
+import { getUserById, newUser } from "../repositories/userRepository.js";
 import { getUrlByUserId } from "../repositories/urlsRepository.js";
+import joi from "joi";
+
 
 export async function getUserId(req, res) {   
     try{
@@ -17,3 +19,15 @@ export async function getUserId(req, res) {
     }
 }
 
+export async function createUser(req, res) {
+    let { name, email, password } = req.body;
+    try{
+        const result = await newUser(name, email, password);
+        if(result.rowCount === 0) return res.status(409).send({ message: "User already exists" });
+
+        res.status(201).send({message: "User created successfully"});
+    } catch(err){
+        console.log(chalk.red(`ERROR CREATING USER: ${err}`));
+        res.status(500).send({error: err.message});
+    }
+}
