@@ -1,6 +1,6 @@
 import chalk from "chalk";
-import { getUserById, newUser } from "../repositories/userRepository.js";
 import { getUrlByUserId } from "../repositories/urlsRepository.js";
+import { getUserById, newUser } from "../repositories/userRepository.js";
 
 export async function getUserId(req, res) {   
     try{

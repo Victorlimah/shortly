@@ -22,7 +22,7 @@ export async function sanitizeData(req, res, next) {
         res.locals.name = stripHtml(name).result.trim();
         res.locals.email = stripHtml(email).result.trim();
         password = stripHtml(password).result.trim();
-        res.locals.password = await bcrypt.hash(password, 10);
+        res.locals.password = bcrypt.hashSync(password, 10);
         next();
     } catch(err){
         console.log(chalk.red(`ERROR SANITIZING DATA: ${err}`));

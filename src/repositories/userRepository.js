@@ -1,4 +1,4 @@
-import { connection } from "./../data/db.js";
+  import { connection } from "./../data/db.js";
 
 export function getUserById(id) {
   return connection.query(`
@@ -8,8 +8,8 @@ export function getUserById(id) {
     FROM users 
       LEFT JOIN urls ON urls."userId"=users.id
     WHERE users.id=$1
-    GROUP BY users.id`,
-    [id]
+    GROUP BY users.id
+    `, [id]
   );
 }
 
