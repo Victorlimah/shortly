@@ -6,7 +6,7 @@ import { checkDataLogin, insertToken } from "../repositories/authRepository.js";
 
 dotenv.config();
 
-export async function SignIn(req, res){
+export async function SignIn(_req, res){
     try{
         let { email, password } = res.locals;
 

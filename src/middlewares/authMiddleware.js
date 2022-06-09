@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import bcrypt from "bcrypt";
 import { stripHtml } from "string-strip-html";
 import { loginSchema } from "../schemas/authSchema.js";
 
@@ -14,12 +13,11 @@ export function validateDataLogin(req, res, next) {
   }
 }
 
-
 export async function sanitizeDataLogin(req, res, next) {
   let { email, password } = req.body;
   try {
     res.locals.email = stripHtml(email).result.trim();
-    //TODO: Sanitize password -  is a correct way to do it?
+    //TODO:  Sanitize password -  is a correct way to do it?
     res.locals.password = stripHtml(password).result.trim();
     next();
   } catch (err) {

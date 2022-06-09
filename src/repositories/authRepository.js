@@ -1,5 +1,6 @@
 import { connection } from "./../data/db.js";
 
+//TODO: transform this function to use two parameters: prop and value
 export function checkDataLogin(email) {
   return connection.query(`
     SELECT * FROM users WHERE email=$1
