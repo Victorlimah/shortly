@@ -17,7 +17,7 @@ export async function SignIn(_req, res){
         let isPasswordValid = bcrypt.compareSync(password, pass);
         if(!isPasswordValid) return res.status(401).send({ error: "Invalid credentials" });   
 
-        const dataToken = { name: user.rows[0].name, email: user.rows[0].email };
+        const dataToken = { id: user.rows[0].id, name: user.rows[0].name};
 
         let token = jwt.sign(dataToken, process.env.JWT_SECRET, {expiresIn: "1h"});
         await insertToken(user.rows[0].id, token);

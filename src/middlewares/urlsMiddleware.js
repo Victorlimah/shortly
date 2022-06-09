@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { urlsSchema } from "../schemas/urlsSchema";
+import { urlsSchema } from "../schemas/urlsSchema.js";
 
 export async function validateData(req, res, next) {
   try {

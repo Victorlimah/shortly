@@ -4,6 +4,9 @@ export function getUrlByUserId(id) {
     return connection.query(`SELECT * FROM urls WHERE "userId" = $1`, [id]);
 }
 
-export function insertUrl(url, userId) {
-    return connection.query(`INSERT INTO urls ("url", "userId") VALUES ($1, $2)`, [url, userId]);
+export function insertUrl(originalUrl, shortUrl, userId) {
+    return connection.query(`
+    INSERT INTO urls ("originalUrl", "shortUrl", "userId")
+    VALUES ($1, $2, $3)
+    `, [originalUrl, shortUrl, userId]);
 }
