@@ -11,6 +11,4 @@ const dbCofig = new Pool({
     }
 });
 
-
-
 export const connection = dbCofig;

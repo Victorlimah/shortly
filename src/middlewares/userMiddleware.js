@@ -1,14 +1,9 @@
 import chalk from "chalk";
 import bcrypt from "bcrypt";
 import { stripHtml } from "string-strip-html";
-import { userSchema } from "../schemas/userSchema.js";
 
 export function validateData(req, res, next) {
     const { password, confirmPassword } = req.body;
-    const { error } = userSchema.validate(req.body);
-
-    if (error)
-        return res.status(422).send({ error: error.details[0].message });
 
     if (password !== confirmPassword)
         return res.status(422).send({ error: "Passwords do not match" });
