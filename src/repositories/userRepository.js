@@ -3,7 +3,8 @@
 export function getUserById(id) {
   return connection.query(`
     SELECT 
-      users.*,
+      users.id,
+      users.name,
       SUM(urls."visitCount") as "visitCount"
     FROM users 
       LEFT JOIN urls ON urls."userId"=users.id

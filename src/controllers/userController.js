@@ -1,21 +1,25 @@
 import chalk from "chalk";
-import { getUrl } from "../repositories/urlsRepository.js";
+import { getUserUrl } from "../repositories/urlsRepository.js";
 import { getUserById, getRankingBD, newUser } from "../repositories/userRepository.js";
 
 export async function getUserId(req, res) {   
     try{
-
+        // Check if user has a permission to access this route //
         const { id } = res.locals.user;
-        if(id !== req.params.id)
-            return res.status(403).send({ error: "You can't access this user" });
+        if(id != req.params.id)
+            return res.status(401).send({ error: "You can't access this user" });
+        // /////////////////////////////////////////////////////////////// //
 
         const result = await getUserById(req.params.id);
         if(result.rowCount === 0) return res.status(404).send({ message: "User not found" });
 
         const user = result.rows[0];
-        const urls = await getUrl("userId", user.id);
+        const urls = await getUserUrl("userId", user.id);
 
-        res.status(200).send({...user, shortnedUrls: urls.rows});
+        let {visitCount} = user;
+        visitCount = visitCount === null ? 0 : visitCount;
+
+        res.status(200).send({...user,visitCount, shortnedUrls: urls.rows});
     } catch(err){
         console.log(chalk.red(`ERROR GETTING USER ID: ${err}`));
         res.status(500).send({error: err.message});
