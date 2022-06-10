@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { getUrlByUserId } from "../repositories/urlsRepository.js";
+import { getUrl } from "../repositories/urlsRepository.js";
 import { getUserById, newUser } from "../repositories/userRepository.js";
 
 export async function getUserId(req, res) {   
@@ -8,7 +8,7 @@ export async function getUserId(req, res) {
         if(result.rowCount === 0) return res.status(404).send({ message: "User not found" });
 
         const user = result.rows[0];
-        const urls = await getUrlByUserId(user.id);
+        const urls = await getUrl("userId", user.id);
 
         res.status(200).send({...user, shortnedUrls: urls.rows});
     } catch(err){

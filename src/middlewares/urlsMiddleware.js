@@ -11,3 +11,14 @@ export async function validateData(req, res, next) {
     res.status(500).send({ error: err.message });
   }
 }
+
+export async function validateGet(req, res, next) {
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(422).send({ error: "Missing id" });
+    next();
+  } catch (err) {
+    console.log(chalk.red(`ERROR VALIDATING GET: ${err}`));
+    res.status(500).send({ error: err.message });
+  }
+}
