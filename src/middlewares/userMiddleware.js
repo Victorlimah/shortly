@@ -3,12 +3,15 @@ import bcrypt from "bcrypt";
 import { stripHtml } from "string-strip-html";
 
 export function validateData(req, res, next) {
+  try {
     const { password, confirmPassword } = req.body;
-
     if (password !== confirmPassword)
-        return res.status(422).send({ error: "Passwords do not match" });
-
+      return res.status(422).send({ error: "Passwords do not match" });
     next();
+  } catch (error) {
+    console.log(chalk.red(`ERROR VALIDATE DATA: ${err}`));
+    res.status(500).send({ error: err.message });
+  }
 }
 
 export async function sanitizeData(req, res, next) {

@@ -2,8 +2,8 @@ import { Router } from "express";
 import { verifyJWT } from "../utils/verifyJWT.js";
 import { urlsSchema } from "../schemas/urlsSchema.js";
 import { validateSchemas } from "../middlewares/validateSchemas.js";
-import { deleteShortUrl, generateShortUrl, redirectToUrl, returnUrl} from "../controllers/urlsController.js";
 import { validateDelete, validateGet, validateRedirect } from "../middlewares/urlsMiddleware.js";
+import { deleteShortUrl, generateShortUrl, redirectToUrl, returnUrl} from "../controllers/urlsController.js";
 
 const urlsRouter = Router();
 

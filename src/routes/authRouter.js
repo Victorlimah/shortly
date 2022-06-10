@@ -9,7 +9,7 @@ import { sanitizeData, validateData } from "../middlewares/userMiddleware.js";
 
 const authRouter = Router();
 
-authRouter.post('/signup', validateSchemas(userSchema), validateData, sanitizeData, createUser );
 authRouter.post("/signin", validateSchemas(loginSchema), sanitizeDataLogin, SignIn);
+authRouter.post('/signup', validateSchemas(userSchema), validateData, sanitizeData, createUser );
 
 export default authRouter;

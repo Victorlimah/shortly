@@ -4,6 +4,11 @@ import { getUserById, getRankingBD, newUser } from "../repositories/userReposito
 
 export async function getUserId(req, res) {   
     try{
+
+        const { id } = res.locals.user;
+        if(id !== req.params.id)
+            return res.status(403).send({ error: "You can't access this user" });
+
         const result = await getUserById(req.params.id);
         if(result.rowCount === 0) return res.status(404).send({ message: "User not found" });
 
