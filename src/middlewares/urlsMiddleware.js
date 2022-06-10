@@ -22,3 +22,14 @@ export async function validateGet(req, res, next) {
     res.status(500).send({ error: err.message });
   }
 }
+
+export async function validateRedirect(req, res, next) {
+  try {
+    const { shortUrl } = req.params;
+    if (!shortUrl) return res.status(422).send({ error: "Missing shortUrl" });
+    next();
+  } catch (err) {
+    console.log(chalk.red(`ERROR VALIDATING REDIRECT: ${err}`));
+    res.status(500).send({ error: err.message });
+  }
+}

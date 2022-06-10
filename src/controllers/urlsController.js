@@ -28,3 +28,17 @@ export async function returnUrl(req, res) {
     res.status(500).send({ error: err.message });
   }
 }
+
+export async function redirectToUrl(req, res) {
+  const { shortUrl } = req.params;
+  try {
+    const url = await getUrl("shortUrl", shortUrl);
+    if(url.rowCount === 0) return res.status(404).send({ error: "Url not found" });
+
+    const { originalUrl } = url.rows[0];
+    res.redirect(originalUrl);
+  } catch (err){
+    console.log(chalk.red(`ERROR REDIRECTING TO URL: ${err}`));
+    res.status(500).send({ error: err.message });
+  }
+}
