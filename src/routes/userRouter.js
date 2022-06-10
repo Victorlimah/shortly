@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { getUserId } from "../controllers/userController.js";
+import { getRanking, getUserId } from "../controllers/userController.js";
 import { verifyJWT } from "../utils/verifyJWT.js";
 
 const userRouter = Router();
 
 userRouter.get("/users/:id", verifyJWT, getUserId);
+userRouter.get("/ranking", getRanking);
 
 export default userRouter;

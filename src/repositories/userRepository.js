@@ -22,3 +22,16 @@ export function newUser(name, email, password) {
     `, [name, email, password]
   );
 }
+
+export function getRankingBD() {
+  return connection.query(`
+    SELECT 
+      users.id, users.name,
+      COUNT(urls) as "linkCount",
+      SUM(urls."visitCount") as "visitCount"
+    FROM users
+      LEFT JOIN urls ON urls."userId"=users.id
+    GROUP BY users.id
+    ORDER BY "linkCount" DESC LIMIT 10
+  `);
+}

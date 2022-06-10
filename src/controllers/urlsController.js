@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { nanoid } from "nanoid";
-import { insertUrl, getUrl } from "../repositories/urlsRepository.js";
 import { deleteUrl } from "../repositories/urlsRepository.js";
+import { insertUrl, getUrl, addVisitCount } from "../repositories/urlsRepository.js";
 
 export async function generateShortUrl(req, res) {
   try {
@@ -36,6 +36,9 @@ export async function redirectToUrl(req, res) {
     const url = await getUrl("shortUrl", shortUrl);
     if(url.rowCount === 0) return res.status(404).send({ error: "Url not found" });
 
+    // Add visit count
+    await addVisitCount("shortUrl", shortUrl);
+
     const { originalUrl } = url.rows[0];
     res.redirect(originalUrl);
   } catch (err){
@@ -44,10 +47,10 @@ export async function redirectToUrl(req, res) {
   }
 }
 
-export async function deleteShortUrl(req, res){
+export async function deleteShortUrl(_req, res){
   const { id } = res.locals;
   try {
-    await deleteUrl(id);
+    await deleteUrl("id", id);
     res.status(204).send({ message: "Url deleted" });
   } catch (err) {
     console.log(chalk.red(`ERROR DELETING URL: ${err}`));

@@ -12,5 +12,9 @@ export function insertUrl(originalUrl, shortUrl, userId) {
 }
 
 export function deleteUrl(param, value) {
-  return connection.query(`DELETE FROM urls WHERE "id" = $1`, [value]);
+  return connection.query(`DELETE FROM urls WHERE "${param}" = $1`, [value]);
+}
+
+export function addVisitCount(param, value) {
+  return connection.query(`UPDATE urls SET "visitCount" = "visitCount" + 1 WHERE "${param}" = $1`, [value]);
 }
