@@ -29,7 +29,9 @@ export function getRankingBD() {
     SELECT 
       users.id, users.name,
       COUNT(urls) as "linkCount",
-      SUM(urls."visitCount") as "visitCount"
+      SUM(
+        CASE WHEN urls."visitCount" IS NULL THEN 0 ELSE urls."visitCount" END
+      ) as "visitCount"
     FROM users
       LEFT JOIN urls ON urls."userId"=users.id
     GROUP BY users.id
