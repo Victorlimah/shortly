@@ -10,3 +10,7 @@ export function insertUrl(originalUrl, shortUrl, userId) {
     VALUES ($1, $2, $3)
     `, [originalUrl, shortUrl, userId]);
 }
+
+export function deleteUrl(param, value) {
+  return connection.query(`DELETE FROM urls WHERE "id" = $1`, [value]);
+}

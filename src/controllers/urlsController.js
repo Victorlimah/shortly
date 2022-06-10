@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { nanoid } from "nanoid";
 import { insertUrl, getUrl } from "../repositories/urlsRepository.js";
+import { deleteUrl } from "../repositories/urlsRepository.js";
 
 export async function generateShortUrl(req, res) {
   try {
@@ -39,6 +40,17 @@ export async function redirectToUrl(req, res) {
     res.redirect(originalUrl);
   } catch (err){
     console.log(chalk.red(`ERROR REDIRECTING TO URL: ${err}`));
+    res.status(500).send({ error: err.message });
+  }
+}
+
+export async function deleteShortUrl(req, res){
+  const { id } = res.locals;
+  try {
+    await deleteUrl(id);
+    res.status(204).send({ message: "Url deleted" });
+  } catch (err) {
+    console.log(chalk.red(`ERROR DELETING URL: ${err}`));
     res.status(500).send({ error: err.message });
   }
 }
