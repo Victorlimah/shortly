@@ -2,9 +2,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/NivaldoFarias/shortly-api">
     <img src="https://github.com/NivaldoFarias/shortly-api/blob/main/assets/shortly-api-logo.png" alt="Logo" width="120">
-  </a>
 
 <h3 align="center">Shortly API</h3>
   <p align="center">
